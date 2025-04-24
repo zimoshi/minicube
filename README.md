@@ -1,2 +1,44 @@
-# minicube
-MiniCube is a minimal command-line virtual machine simulation with user directory, built-in commands, and shell script support. Inspired by a Scratch project, it provides a fake /home environment and internal command handling via Python + Bash.
+
+# MiniCube
+
+MiniCube is a lightweight command-line virtual machine simulation written in Python. It mimics a shell environment with a virtual home directory (`/home/<user>`), built-in commands (`curd`, `ccd`, etc.), and support for shell script modules.
+
+## Features
+
+- Virtual home (`/home/<user>`) mapped to `/tmp`
+- Built-in commands: `curd`, `ccd`, etc.
+- Command scripts in `commands/` folder (e.g. `commands/install/install.sh`)
+- Subcommand support: `install install cubeos`
+- Startup file support (`~/.micurc`)
+- Developer-friendly debug output
+
+## Structure
+
+```
+minicube/
+├── main.py       # Core MiniCube interpreter (aka vm.pyd)
+├── commands/
+│   └── example/
+│       └── example.sh
+```
+
+## Example
+
+```bash
+/home/zimo > curd
+/home/zimo
+
+/home/zimo > ccd projects
+/home/zimo/projects >
+
+/home/zimo > cubeos directory
+Welcome to CubeOS!
+```
+
+## License
+
+MiniCube Personal License (MCPL).
+
+This project is licensed for personal use only.
+
+📌 **Please do not fork or redistribute this repository** without permission from the author: [zimoshi](https://github.com/zimoshi).
