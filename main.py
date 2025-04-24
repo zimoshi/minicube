@@ -56,7 +56,7 @@ while True:
             print(os.getcwd().replace(real_home, virtual_home, 1))
             continue
         
-        if command == "ls":
+        if command == "list":
             try:
                 subprocess.run(["ls"] + args)
             except Exception as e:
