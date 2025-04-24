@@ -1,6 +1,8 @@
 
 # MiniCube
 
+[![Install MiniCube](https://img.shields.io/badge/🧊%20Install-MiniCube-blue)](https://zimoshi.github.io/minicube/setup.sh)
+
 MiniCube is a lightweight command-line virtual machine simulation written in Python. It mimics a shell environment with a virtual home directory (`/home/<user>`), built-in commands (`curd`, `ccd`, etc.), and support for shell script modules.
 
 ## Features
