@@ -12,6 +12,13 @@ MiniCube is a lightweight command-line virtual machine simulation written in Pyt
 - Startup file support (`~/.micurc`)
 - Developer-friendly debug output
 
+## Install
+```bash
+curl -LO https://zimoshi.github.io/minicube/setup.sh
+chmod +x setup.sh
+./setup.sh
+```
+
 ## Structure
 
 ```
