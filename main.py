@@ -24,6 +24,19 @@ if os.path.isfile(micurc_path):
                 # print(f"~/.micurc > {line}")
                 os.system(line)
 
+import readline
+import atexit
+
+HISTORY_FILE = os.path.join(real_home, ".minicube_history")
+os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
+
+# Load history if exists
+if os.path.exists(HISTORY_FILE):
+    readline.read_history_file(HISTORY_FILE)
+
+# Save history on exit
+atexit.register(readline.write_history_file, HISTORY_FILE)
+
 # Install path
 minicube_root = os.path.dirname(os.path.abspath(__file__))
 print(cvert(f"[syntaxp-light-purple]Last login: {time.asctime()[:-5]} on ttys0{random.randint(10,45)}[syntaxp-reset]"))
@@ -42,6 +55,18 @@ while True:
         if command == "curd":
             print(os.getcwd().replace(real_home, virtual_home, 1))
             continue
+        
+        if command == "ls":
+            try:
+                subprocess.run(["ls"] + args)
+            except Exception as e:
+                print(cvert(f"[syntaxp-red]ls error:[syntaxp-reset] {e}"))
+            continue
+        
+        if command == "clr":
+            os.system("clear")
+            continue
+
         
         # Pass-through to system nano
         if command == "nano":
