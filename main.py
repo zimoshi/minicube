@@ -16,7 +16,7 @@ if os.path.isfile(micurc_path):
         for line in f:
             line = line.strip()
             if line and not line.startswith("#"):
-                print(f"~/.micurc > {line}")
+                # print(f"~/.micurc > {line}")
                 os.system(line)
 
 # Install path
