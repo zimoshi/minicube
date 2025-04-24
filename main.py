@@ -2,6 +2,11 @@ import subprocess
 import os
 import sys
 import shlex
+from syntaxp import cvert
+import time
+import random
+
+print(cvert("[syntaxp-bold][syntaxp-light-green]MiniCube 2.5.2 alpha 3[syntaxp-reset]"))
 
 # Setup virtual home
 username = os.getenv("USER") or os.getenv("USERNAME") or "user"
@@ -21,11 +26,12 @@ if os.path.isfile(micurc_path):
 
 # Install path
 minicube_root = os.path.dirname(os.path.abspath(__file__))
+print(cvert(f"[syntaxp-light-purple]Last login: {time.asctime()[:-5]} on ttys0{random.randint(10,45)}[syntaxp-reset]"))
 
 while True:
     try:
         cwd_virtual = os.getcwd().replace(real_home, virtual_home, 1)
-        cmd_input = input(f"{cwd_virtual.split("/")[-1]} > ").strip()
+        cmd_input = input(cvert(f"[syntaxp-cyan]{cwd_virtual.split('/')[-1]} > [syntaxp-blue]", True)).strip()
         if not cmd_input:
             continue
 
@@ -35,6 +41,17 @@ while True:
         # Handle built-in curd
         if command == "curd":
             print(os.getcwd().replace(real_home, virtual_home, 1))
+            continue
+        
+        # Pass-through to system nano
+        if command == "nano":
+            if not args:
+                print("Usage: nano <filename>")
+                continue
+            try:
+                subprocess.run(["nano"] + args)
+            except FileNotFoundError:
+                print("Nano is not installed.")
             continue
 
         # Handle built-in ccd
@@ -63,29 +80,29 @@ while True:
                 script_path = fallback_script
                 script_args = args
             else:
-                print(f"Command '{command}' not found or no matching script.")
+                print(cvert(f"[syntaxp-red]Command '{command}' not found or no matching script.[syntaxp-reset]"))
                 continue
         else:
             fallback_script = os.path.join(script_dir, f"{command}.sh")
             if not os.path.isfile(os.path.join(minicube_root, fallback_script)):
-                print(f"Command '{command}' not found or '{command}.sh' missing.")
+                print(cvert(f"[syntaxp-red]Command '{command}' not found or '{command}.sh' missing.[syntaxp-reset]"))
                 continue
             script_path = fallback_script
             script_args = []
 
-        print("MiniCube Developer mode command debug:", f"[\"{command}\"]", args)
+        # print("MiniCube Developer mode command debug:", f"[\"{command}\"]", args)
 
         # Run command from root, then return
         os.chdir(minicube_root)
         result = subprocess.run(["sh", script_path] + script_args, capture_output=True, text=True)
         os.chdir(real_home)
 
-        print(result.stdout)
+        print(cvert(f"[syntaxp-green]{result.stdout}[syntaxp-reset]"))
         if result.stderr:
             print(result.stderr, file=sys.stderr)
 
     except KeyboardInterrupt:
-        print("\nMiniCube exiting.")
+        print(cvert("\n[syntaxp-red]MiniCube exiting.[syntaxp-reset]"))
         break
     except Exception as e:
         print(f"Error: {e}")
